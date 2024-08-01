@@ -114,6 +114,18 @@ select
   group by PS.POLICE_STATION, PS.POLICE_TEL, PS.POLICE_NO) DATA
  on EF.POLICE_STATION = DATA.POLICE_NO
  where EF.FACILITY_CAPACITY > '1000';
+ 
+-- CR人員的簡化版，使用 partition by
+select
+ PS.POLICE_STATION as "轄管分局",
+ PS.POLICE_TEL as "分局連絡電話",
+ count(PS.POLICE_STATION) over (partition by PS.POLICE_STATION) as "設施數量",
+ EF.FACILITY_ADD as "避難設施地址",
+ EF.FACILITY_CLASS as "類型"
+ from STUDENT.EVACUATION_FACILITY EF
+ inner join STUDENT.POLICE_STATION PS
+ on EF.POLICE_STATION = PS.POLICE_NO
+ where EF.FACILITY_CAPACITY > '1000';
 
 
 -- 實作練習 4-4
