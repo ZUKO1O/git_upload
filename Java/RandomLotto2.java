@@ -28,7 +28,7 @@ public class RandomLotto2 {
 		printNum(randomList);
 	}
 
-	public static void printNum(List<Integer> list) {
+	private static void printNum(List<Integer> list) {
 		for (Integer onlyNum : list) {
 			System.out.print(onlyNum + " ");
 		}

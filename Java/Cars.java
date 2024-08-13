@@ -1,4 +1,5 @@
 package com.cathaybk.practice.nt50340.b;
+
 /**
  * JAVA評量6
  */
@@ -21,21 +22,19 @@ import java.util.TreeSet;
 
 public class Cars {
 
-	public static String URL_IN = "C:\\Users\\Admin\\Desktop\\cars.csv";
+	private static String URL_IN = "C:\\Users\\Admin\\Desktop\\cars.csv";
 
-	public static String URL_OUT = "C:\\Users\\Admin\\Desktop\\cars2.csv";
+	private static String URL_OUT = "C:\\Users\\Admin\\Desktop\\cars2.csv";
 
 	public static void main(String[] args) {
 		// 第一部分
-		BufferedReader readCars = null;
-		BufferedWriter writeOut = null;
 		String line = null;
 		List<Map<String, String>> carList = new ArrayList<>();
 		File outFile = new File(URL_OUT);
+		try (BufferedReader readCars = new BufferedReader(new InputStreamReader(new FileInputStream(URL_IN)));
+				BufferedWriter writeOut = new BufferedWriter(
+						new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));) {
 
-		try {
-			readCars = new BufferedReader(new InputStreamReader(new FileInputStream(URL_IN)));
-			writeOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
 			line = readCars.readLine();
 			String title[] = line.split(",");
 
@@ -73,11 +72,8 @@ public class Cars {
 
 				@Override
 				public int compare(Map<String, String> m1, Map<String, String> m2) {
-					int compare = m1.get("Manufacturer").compareTo(m2.get("Manufacturer"));
-					if (compare != 0) {
-						return compare;
-					}
-					return m1.get("Type").compareTo(m2.get("Type"));
+					int compare = m1.get("Type").compareTo(m2.get("Type"));
+					return compare;
 				}
 			});
 			Set<String> manufacturerSet = new TreeSet<>();
@@ -87,11 +83,11 @@ public class Cars {
 			for (Map<String, String> cars : carList) {
 				manufacturerSet.add(cars.get("Manufacturer"));
 			}
-			for (int i = 0; i < manufacturerSet.size(); i++) {
+			for (String manu : manufacturerSet) {
 				BigDecimal subTotalMinPrice = BigDecimal.ZERO;
 				BigDecimal subTotalPrice = BigDecimal.ZERO;
 				for (Map<String, String> cars : carList) {
-					if (cars.get("Manufacturer").equals(manufacturerSet.toArray()[i])) {
+					if (cars.get("Manufacturer").equals(manu)) {
 						System.out.printf("%-13s%-8s%8s%7s\n", cars.get("Manufacturer"), cars.get("Type"),
 								cars.get("Min.Price"), cars.get("Price"));
 						subTotalMinPrice = subTotalMinPrice.add(new BigDecimal(cars.get("Min.Price")));
@@ -100,28 +96,11 @@ public class Cars {
 						totalPrice = totalPrice.add(new BigDecimal(cars.get("Price")));
 					}
 				}
-				System.out.printf("%-20s%8s%7s\n", "小計", subTotalMinPrice, subTotalPrice);
+				System.out.printf("%-20s%8s%7s\n", "小計　", subTotalMinPrice, subTotalPrice);
 			}
-			System.out.printf("%-20s%8s%7s\n", "合計", totalMinPrice, totalPrice);
+			System.out.printf("%-20s%8s%7s\n", "合計　", totalMinPrice, totalPrice);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (readCars != null) {
-					readCars.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				if (writeOut != null) {
-					writeOut.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
-
 	}
-
 }
