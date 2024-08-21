@@ -4,7 +4,6 @@ package com.cathaybk.practice.nt50340.b;
  * JAVA評量5
  */
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Scanner;
 
 public class Calender {
@@ -21,8 +20,7 @@ public class Calender {
 				month = scanner.nextInt();
 			}
 		} while (month < 1 || month > 12);
-		Calendar now = Calendar.getInstance();
-		int year = now.get(Calendar.YEAR);
+		int year = LocalDate.now().getYear();
 		LocalDate firstDate = LocalDate.of(year, month, 1);
 		int dayMonth = firstDate.lengthOfMonth();
 		int dayWeek = firstDate.getDayOfWeek().getValue();

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="Table.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        button {
+            border: 1px solid DarkGray;
+            background: linear-gradient(0deg, Gainsboro, WhiteSmoke);
+        }
+
+        td {
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <td>製造商</td>
+            <td><input type="text" name="input"></td>
+            <td>類別</td>
+            <td><input type="text" name="input"></td>
+        </tr>
+        <tr>
+            <td>底價</td>
+            <td><input type="text" name="input"></td>
+            <td>售價</td>
+            <td><input type="text" name="input"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center;">
+                <button type="button" onclick="doAdd()">新增</button>
+                <button type="button" onclick="doAlter()">修改</button>
+                <button type="button" onclick="doClear()">清空</button>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table border="1" id="tableResult">
+        <thead>
+            <td></td>
+            <td>序號</td>
+            <td>製造商</td>
+            <td>類別</td>
+            <td>底價</td>
+            <td>售價</td>
+            <td></td>
+        </thead>
+    </table>
+</body>
+
+</html>
