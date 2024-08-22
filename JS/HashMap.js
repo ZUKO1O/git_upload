@@ -32,13 +32,17 @@ window.onload = function () {
     document.getElementById('buttonPut').onclick = function () {
         inputKey = document.getElementById('inputKey');
         inputValue = document.getElementById('inputValue');
-        if (!inputKey.value.trim() || map.contains(inputKey.value)) {
+        if (!inputKey.value.trim()) {
+            alert('提醒：KEY值不能為空！');
+            return;
+        } else if (map.contains(inputKey.value)) {
+            alert('提醒：KEY值不能重複！');
             return;
         }
         map.put(inputKey.value, inputValue.value);
         print();
-
     }
+
     document.getElementById('buttonClear').onclick = function () {
         inputKey.value = '';
         inputValue.value = '';
@@ -50,7 +54,7 @@ window.onload = function () {
         let result = '';
         const key = map.keys();
         for (let i = 0; i < key.length; i++) {
-            result += '　　' + key[i] + '：' + map.get(key[i]) + '<br>';
+            result += key[i] + '：' + map.get(key[i]) + '<br>';
         }
         document.getElementById('result').innerHTML = result;
     }

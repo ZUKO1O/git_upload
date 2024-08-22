@@ -4,7 +4,7 @@ window.onload = function () {
 }
 
 const doAdd = function () {
-    if (!inputArray[0].value.trim() || !inputArray[1].value.trim()) {
+    if (doAlert()) {
         return;
     }
     let trObj = createEle('tr');
@@ -20,15 +20,21 @@ const doAdd = function () {
 }
 
 const doAlter = function () {
-    if (!inputArray[0].value.trim() || !inputArray[1].value.trim()) {
-        return;
-    }
     let next;
     const radioArray = document.getElementsByName('radio');
     for (let radio of radioArray) {
         if (radio.checked) {
             next = radio;
-        };
+        }
+    }
+    if (!radioArray[0]) {
+        alert('提醒：目前無資料可供修改！');
+        return;
+    } else if (!next) {
+        alert('提醒：請點選任一資料進行修改！');
+        return;
+    } else if (doAlert()) {
+        return;
     }
     next = next.parentNode.nextElementSibling.firstElementChild;
     for (let input of inputArray) {
@@ -92,5 +98,19 @@ const appendChilds = function (child1, child2, child3, child4) {
     child2.appendChild(child1);
     child3.appendChild(child2);
     child4.appendChild(child3);
+}
+
+const doAlert = function () {
+    const boolean = true;
+    if (!inputArray[0].value.trim() || !inputArray[1].value.trim()) {
+        alert('提醒：製造商及類別不可為空！');
+        return boolean;
+    } else if (isNaN(inputArray[2].value) || isNaN(inputArray[3].value)) {
+        alert('提醒：底價及售價須為數字！');
+        return boolean;
+    } else if (inputArray[2].value < 0 || inputArray[3].value < 0) {
+        alert('提醒：底價及售價不可為負值！');
+        return boolean;
+    }
 }
 
